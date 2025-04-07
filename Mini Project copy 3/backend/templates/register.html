@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Registration - AI-Powered Local Business Booster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='futuristic.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="ai-orb"></div>
+    <div class="ai-particles" id="particles"></div>
+    <div class="cyber-lines" id="cyber-lines"></div>
+
+    <div class="futuristic-layout">
+        <main class="futuristic-main">
+            <div class="register-container">
+                <div class="register-header">
+                    <h1 class="futuristic-title">Business Registration</h1>
+                    <p class="futuristic-subtitle">Join our AI-powered business network</p>
+                </div>
+
+                <div id="register-error" class="futuristic-alert" style="display: none;"></div>
+
+                <form id="register-form" class="futuristic-form" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="business_name">
+                            <i class="fas fa-store"></i>
+                            Business Name
+                        </label>
+                        <input type="text" id="business_name" name="business_name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="business_category">
+                            <i class="fas fa-tags"></i>
+                            Business Category
+                        </label>
+                        <select id="business_category" name="business_category" required>
+                            <option value="">Select Category</option>
+                            <optgroup label="🛍️ Retail & Shopping">
+                                <option value="boutique">Boutiques & Fashion Stores</option>
+                                <option value="electronics">Electronics & Gadgets</option>
+                                <option value="supermarket">Supermarkets & Grocery Stores</option>
+                                <option value="bookstore">Bookstores & Stationery Shops</option>
+                            </optgroup>
+                            <optgroup label="☕ Food & Beverages">
+                                <option value="cafe">Cafés & Bakeries</option>
+                                <option value="restaurant">Restaurants & Fine Dining</option>
+                                <option value="street_food">Street Food & Quick Bites</option>
+                                <option value="organic">Organic & Health Food Stores</option>
+                            </optgroup>
+                            <optgroup label="💆 Beauty & Wellness">
+                                <option value="salon">Salons & Spas</option>
+                                <option value="fitness">Yoga & Fitness Studios</option>
+                            </optgroup>
+                            <optgroup label="🏥 Healthcare & Medical">
+                                <option value="pharmacy">Pharmacies & Medical Stores</option>
+                                <option value="clinic">Clinics & Therapy Centers</option>
+                            </optgroup>
+                            <optgroup label="🎨 Art, Culture & Entertainment">
+                                <option value="handicraft">Handicrafts & Local Art Shops</option>
+                                <option value="music">Music & Dance Studios</option>
+                                <option value="gaming">Gaming & VR Lounges</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Location
+                        </label>
+                        <select id="location" name="location" required>
+                            <option value="">Select Location</option>
+                            <option value="nalanchira">Nalanchira</option>
+                            <option value="kesavadasapuram">Kesavadasapuram</option>
+                            <option value="pattom">Pattom</option>
+                            <option value="thampanoor">Thampanoor</option>
+                            <option value="kazhakootam">Kazhakootam</option>
+                            <option value="sreekaryam">Sreekaryam</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">
+                            <i class="fas fa-address-card"></i>
+                            Detailed Address
+                        </label>
+                        <textarea id="address" name="address" required placeholder="Enter your complete address..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="password" name="password" required>
+                            <i class="fas fa-eye-slash toggle-password"></i>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar"></div>
+                            <span class="strength-text">Password strength: <span class="strength-value">Weak</span></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">
+                            <i class="fas fa-lock"></i>
+                            Confirm Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                            <i class="fas fa-eye-slash toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="futuristic-btn">
+                        <span>Register</span>
+                        <div class="loading"></div>
+                    </button>
+                </form>
+
+                <div class="register-footer">
+                    <p>Already have an account? <a href="/" class="futuristic-link">Login here</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .register-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .futuristic-subtitle {
+            color: #00ff9d;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .futuristic-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-group label i {
+            color: #00ff9d;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ff9d;
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.2);
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00ff9d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #fff;
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: #ff4444;
+            width: 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-text {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        .futuristic-btn {
+            margin-top: 1rem;
+            padding: 1rem;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .futuristic-btn .loading {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 157, 0.2);
+            animation: loading 1s infinite;
+        }
+
+        .futuristic-btn.loading .loading {
+            display: block;
+        }
+
+        .futuristic-btn.loading span {
+            visibility: hidden;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .register-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #888;
+        }
+
+        .futuristic-link {
+            color: #00ff9d;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .futuristic-link:hover {
+            color: #fff;
+        }
+
+        .futuristic-alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create cyber lines
+        function createCyberLines() {
+            const container = document.getElementById('cyber-lines');
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'cyber-line';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(line);
+            }
+        }
+
+        createParticles();
+        createCyberLines();
+
+        // Password visibility toggle
+        document.querySelectorAll('.toggle-password').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+
+        // Password strength checker
+        const password = document.getElementById('password');
+        const strengthBar = document.querySelector('.strength-bar');
+        const strengthValue = document.querySelector('.strength-value');
+
+        password.addEventListener('input', function() {
+            const value = this.value;
+            let strength = 0;
+            
+            if (value.length >= 8) strength += 25;
+            if (value.match(/[a-z]/) && value.match(/[A-Z]/)) strength += 25;
+            if (value.match(/\d/)) strength += 25;
+            if (value.match(/[^a-zA-Z\d]/)) strength += 25;
+
+            strengthBar.style.width = strength + '%';
+            strengthBar.style.backgroundColor = 
+                strength <= 25 ? '#ff4444' :
+                strength <= 50 ? '#ffbb33' :
+                strength <= 75 ? '#00C851' :
+                '#007E33';
+
+            strengthValue.textContent = 
+                strength <= 25 ? 'Weak' :
+                strength <= 50 ? 'Medium' :
+                strength <= 75 ? 'Strong' :
+                'Very Strong';
+        });
+
+        // Form submission
+        async function handleRegister(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('.futuristic-btn');
+            const errorDiv = document.getElementById('register-error');
+
+            // Validate passwords match
+            if (form.password.value !== form.confirm_password.value) {
+                errorDiv.textContent = 'Passwords do not match';
+                errorDiv.style.display = 'block';
+                errorDiv.style.backgroundColor = 'rgba(255, 68, 68, 0.1)';
+                errorDiv.style.color = '#ff4444';
+                return;
+            }
+
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        business_name: form.business_name.value,
+                        category: form.business_category.value,
+                        location: form.location.value,
+                        address: form.address.value,
+                        password: form.password.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Redirect to index page with business ID and registration success flag
+                    window.location.href = `/?business_id=${data.business_id}&registration_success=true`;
+                } else {
+                    // Show error message
+                    errorDiv.style.display = 'block';
+                    errorDiv.style.backgroundColor = 'rgba(255, 68, 68, 0.1)';
+                    errorDiv.style.color = '#ff4444';
+                    errorDiv.textContent = data.error || 'Registration failed. Please try again.';
+                }
+            } catch (error) {
+                errorDiv.style.display = 'block';
+                errorDiv.style.backgroundColor = 'rgba(255, 68, 68, 0.1)';
+                errorDiv.style.color = '#ff4444';
+                errorDiv.textContent = 'An error occurred. Please try again.';
+            } finally {
+                // Reset loading state
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

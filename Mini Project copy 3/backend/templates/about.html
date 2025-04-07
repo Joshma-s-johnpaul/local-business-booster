@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI-Powered Local Business Booster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='futuristic.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="ai-orb"></div>
+    <div class="ai-particles" id="particles"></div>
+    <div class="cyber-lines" id="cyber-lines"></div>
+
+    <div class="futuristic-layout">
+        <nav class="futuristic-topnav">
+            <div class="nav-header">
+                <h2 class="futuristic-title">AI Business Booster</h2>
+            </div>
+            <ul class="futuristic-nav">
+                <li>
+                    <a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="/offers"><i class="fas fa-gift"></i> Offers</a>
+                </li>
+                <li>
+                    <a href="/analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+                </li>
+                <li>
+                    <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+                <li class="active">
+                    <a href="/about"><i class="fas fa-users"></i> About Us</a>
+                </li>
+                <li>
+                    <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="futuristic-main">
+            <div class="about-container">
+                <section class="about-section">
+                    <h1 class="futuristic-title">About Our Project</h1>
+                    <div class="about-content">
+                        <div class="project-description">
+                            <h2><i class="fas fa-rocket"></i> Our Vision</h2>
+                            <p>AI-Powered Local Business Booster is a revolutionary platform designed to transform how local businesses connect with their customers. We leverage cutting-edge artificial intelligence to help businesses create, manage, and optimize their promotional offers, ultimately driving growth and customer engagement.</p>
+                        </div>
+
+                        <div class="project-features">
+                            <h2><i class="fas fa-star"></i> Key Features</h2>
+                            <ul>
+                                <li><i class="fas fa-check"></i> AI-Driven Offer Creation</li>
+                                <li><i class="fas fa-check"></i> Real-time Analytics Dashboard</li>
+                                <li><i class="fas fa-check"></i> Smart Customer Engagement</li>
+                                <li><i class="fas fa-check"></i> Performance Tracking</li>
+                                <li><i class="fas fa-check"></i> Data-Driven Insights</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="team-section">
+                    <h2 class="futuristic-title">Our Team</h2>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-image">
+                                <img src="{{ url_for('static', filename='images/alvin.jpg') }}" alt="Alvin P Mathews">
+                            </div>
+                            <h3>Alvin P Mathews</h3>
+                            <p>Group Member</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/alvin-mathews-9920b9284" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/mathewsalvin" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="member-image">
+                                <img src="{{ url_for('static', filename='images/joshma.jpg') }}" alt="Joshma S Johnpaul">
+                            </div>
+                            <h3>Joshma S Johnpaul</h3>
+                            <p>Group Member</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/joshma-s-johnpaul-81a800258" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/Joshma-s-johnpaul" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="member-image">
+                                <img src="{{ url_for('static', filename='images/kasinadhan.jpg') }}" alt="Kasinadhan B">
+                            </div>
+                            <h3>Kasinadhan B</h3>
+                            <p>Group Member</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/kasinadhan-b-41b169204/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/kasi10" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="member-image">
+                                <img src="{{ url_for('static', filename='images/litty.jpg') }}" alt="Litty Sara John">
+                            </div>
+                            <h3>Litty Sara John</h3>
+                            <p>Group Member</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/litty-sara-john-9a9363318" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                <span class="social-link disabled"><i class="fab fa-github"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .futuristic-topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .futuristic-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .futuristic-nav li {
+            position: relative;
+        }
+
+        .futuristic-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .futuristic-nav a i {
+            color: #00ff9d;
+            font-size: 1.1rem;
+        }
+
+        .futuristic-nav a:hover {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+
+        .futuristic-nav li.active a {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+
+        .futuristic-nav li.active a i {
+            color: #00ff9d;
+        }
+
+        .futuristic-nav .logout-btn,
+        .futuristic-nav .logout-btn i,
+        .futuristic-nav .logout-btn:hover,
+        .futuristic-nav .logout-btn:hover i {
+            color: #ff4444 !important;
+        }
+
+        .futuristic-nav .logout-btn:hover {
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .futuristic-main {
+            margin-top: 5rem;
+            padding: 2rem;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .about-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+        }
+
+        .about-content {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-description, .project-features {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+        }
+
+        .project-description h2, .project-features h2 {
+            color: #00ff9d;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-description p {
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .project-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .project-features li {
+            color: #fff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-features li i {
+            color: #00ff9d;
+        }
+
+        .team-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 157, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.1);
+        }
+
+        .member-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(0, 255, 157, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover .member-image {
+            border-color: rgba(0, 255, 157, 0.5);
+            transform: scale(1.05);
+        }
+
+        .team-member h3 {
+            color: #fff;
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .team-member p {
+            color: #00ff9d;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .member-social {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: #00ff9d;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .social-link:hover {
+            color: #fff;
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .social-link.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .social-link.disabled:hover {
+            transform: none;
+            color: #00ff9d;
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                padding: 1rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create cyber lines
+        function createCyberLines() {
+            const container = document.getElementById('cyber-lines');
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'cyber-line';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(line);
+            }
+        }
+
+        createParticles();
+        createCyberLines();
+    </script>
+</body>
+</html>

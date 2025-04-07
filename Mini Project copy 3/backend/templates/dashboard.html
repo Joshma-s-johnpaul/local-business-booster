@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI-Powered Local Business Booster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='futuristic.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="ai-orb"></div>
+    <div class="ai-particles" id="particles"></div>
+    <div class="cyber-lines" id="cyber-lines"></div>
+
+    <div class="futuristic-layout">
+        <nav class="futuristic-topnav">
+            <div class="nav-header">
+                <h2 class="futuristic-title">AI Business Booster</h2>
+            </div>
+            <ul class="futuristic-nav">
+                <li class="active">
+                    <a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="/offers"><i class="fas fa-gift"></i> Offers</a>
+                </li>
+                <li>
+                    <a href="/analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+                </li>
+                <li>
+                    <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+                <li>
+                    <a href="/about"><i class="fas fa-users"></i> About Us</a>
+                </li>
+                <li>
+                    <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="futuristic-main">
+            <header class="futuristic-header">
+                <h1 class="futuristic-title">Welcome, {{ business_name }}</h1>
+                <div class="header-actions">
+                    <button class="futuristic-btn" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="futuristic-btn" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                </div>
+            </header>
+
+            <div class="futuristic-grid">
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Performance Overview</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric">
+                            <span class="metric-value" id="total-offers">{{ total_offers }}</span>
+                            <span class="metric-label">Active Offers</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" id="total-views">{{ total_views }}</span>
+                            <span class="metric-label">Total Views</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" id="total-engagements">{{ total_engagements }}</span>
+                            <span class="metric-label">Engagements</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" id="conversion-rate">{{ conversion_rate }}%</span>
+                            <span class="metric-label">Conversion Rate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-bullseye"></i>
+                        <h3>AI Insights</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="insights-container">
+                            <div class="insight-item">
+                                <i class="fas fa-chart-line"></i>
+                                <div class="insight-content">
+                                    <h4>Performance Trend</h4>
+                                    <p id="performance-trend">Loading...</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-users"></i>
+                                <div class="insight-content">
+                                    <h4>Customer Demographics</h4>
+                                    <p id="customer-demographics">Loading...</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-clock"></i>
+                                <div class="insight-content">
+                                    <h4>Peak Engagement Times</h4>
+                                    <p id="peak-times">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-bell"></i>
+                        <h3>Notifications & Alerts</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="notifications-list" id="notifications">
+                            <!-- Notifications will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .futuristic-topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .futuristic-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .futuristic-nav li {
+            position: relative;
+        }
+
+        .futuristic-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .futuristic-nav a i {
+            color: #00ff9d;
+            font-size: 1.1rem;
+        }
+
+        .futuristic-nav a:hover {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+
+        .futuristic-nav li.active a {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+
+        .futuristic-nav li.active a i {
+            color: #00ff9d;
+        }
+
+        /* Updated logout button styles with more specific selectors */
+        .futuristic-nav .logout-btn,
+        .futuristic-nav .logout-btn i,
+        .futuristic-nav .logout-btn:hover,
+        .futuristic-nav .logout-btn:hover i {
+            color: #ff4444 !important;
+        }
+
+        .futuristic-nav .logout-btn:hover {
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .futuristic-main {
+            margin-top: 5rem;
+            padding: 2rem;
+        }
+
+        .insights-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .insight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .insight-item:hover {
+            transform: translateX(5px);
+        }
+        .insight-item i {
+            font-size: 1.5rem;
+            color: #00ff9d;
+        }
+        .insight-content h4 {
+            margin: 0;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .insight-content p {
+            margin: 0.5rem 0 0;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        .notifications-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 255, 157, 0.1);
+        }
+        .notification-content {
+            flex: 1;
+        }
+        .notification-title {
+            margin: 0;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        .notification-time {
+            color: #888;
+            font-size: 0.8rem;
+        }
+    </style>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create cyber lines
+        function createCyberLines() {
+            const container = document.getElementById('cyber-lines');
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'cyber-line';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(line);
+            }
+        }
+
+        createParticles();
+        createCyberLines();
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/dashboard-data');
+                if (!response.ok) throw new Error('Failed to load dashboard data');
+                
+                const data = await response.json();
+                updateMetrics(data);
+                updateInsights(data);
+                updateNotifications(data.notifications);
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showToast('Failed to load dashboard data. Please try again.', 'error');
+            }
+        }
+
+        // Update metrics
+        function updateMetrics(data) {
+            document.getElementById('total-offers').textContent = data.total_offers;
+            document.getElementById('total-views').textContent = data.total_views;
+            document.getElementById('total-engagements').textContent = data.total_engagements;
+            document.getElementById('conversion-rate').textContent = data.conversion_rate + '%';
+        }
+
+        // Update insights
+        function updateInsights(data) {
+            document.getElementById('performance-trend').textContent = data.performance_trend;
+            document.getElementById('customer-demographics').textContent = data.customer_demographics;
+            document.getElementById('peak-times').textContent = data.peak_times;
+        }
+
+        // Update notifications
+        function updateNotifications(notifications) {
+            const container = document.getElementById('notifications');
+            container.innerHTML = notifications.map(notification => `
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="fas ${getNotificationIcon(notification.type)}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4 class="notification-title">${notification.title}</h4>
+                        <p>${notification.message}</p>
+                        <span class="notification-time">${notification.time}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Get notification icon based on type
+        function getNotificationIcon(type) {
+            const icons = {
+                'success': 'fa-check-circle',
+                'warning': 'fa-exclamation-triangle',
+                'info': 'fa-info-circle',
+                'offer': 'fa-gift',
+                'engagement': 'fa-hand-pointer'
+            };
+            return icons[type] || 'fa-bell';
+        }
+
+        // Refresh dashboard
+        function refreshDashboard() {
+            loadDashboardData();
+            showToast('Dashboard refreshed!', 'success');
+        }
+
+        // Export data
+        async function exportData() {
+            try {
+                const response = await fetch('/export-data');
+                if (!response.ok) throw new Error('Failed to export data');
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'business-data.csv';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                showToast('Data exported successfully!', 'success');
+            } catch (error) {
+                console.error('Error exporting data:', error);
+                showToast('Failed to export data. Please try again.', 'error');
+            }
+        }
+
+        // Show toast message
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `futuristic-toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Load dashboard data when page loads
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
+    </script>
+</body>
+</html>

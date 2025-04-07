@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers - AI-Powered Local Business Booster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='futuristic.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="ai-orb"></div>
+    <div class="ai-particles" id="particles"></div>
+    <div class="cyber-lines" id="cyber-lines"></div>
+
+    <div class="futuristic-layout">
+        <nav class="futuristic-topnav">
+            <div class="nav-header">
+                <h2 class="futuristic-title">AI Business Booster</h2>
+            </div>
+            <ul class="futuristic-nav">
+                <li>
+                    <a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                </li>
+                <li class="active">
+                    <a href="/offers"><i class="fas fa-gift"></i> Offers</a>
+                </li>
+                <li>
+                    <a href="/analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+                </li>
+                <li>
+                    <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+                <li>
+                    <a href="/about"><i class="fas fa-users"></i> About Us</a>
+                </li>
+                <li>
+                    <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="futuristic-main">
+            <header class="futuristic-header">
+                <h1 class="futuristic-title">Manage Offers</h1>
+            </header>
+
+            <div class="futuristic-grid">
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-gift"></i>
+                        <h3>Active Offers</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="offers-list" id="active-offers">
+                            <!-- Active offers will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-clock"></i>
+                        <h3>Expired Offers</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="offers-list" id="expired-offers">
+                            <!-- Expired offers will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Offer Analytics</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="analytics-grid">
+                            <div class="analytics-item">
+                                <span class="analytics-value" id="total-views">0</span>
+                                <span class="analytics-label">Total Views</span>
+                            </div>
+                            <div class="analytics-item">
+                                <span class="analytics-value" id="total-engagements">0</span>
+                                <span class="analytics-label">Engagements</span>
+                            </div>
+                            <div class="analytics-item">
+                                <span class="analytics-value" id="conversion-rate">0%</span>
+                                <span class="analytics-label">Conversion Rate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="new-offer-section">
+                <button class="futuristic-btn" onclick="createNewOffer()">
+                    <i class="fas fa-plus"></i> New Offer
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .futuristic-topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .futuristic-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .futuristic-nav li {
+            position: relative;
+        }
+
+        .futuristic-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .futuristic-nav a i {
+            color: #00ff9d;
+            font-size: 1.1rem;
+        }
+
+        .futuristic-nav a:hover {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+
+        .futuristic-nav li.active a {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+
+        .futuristic-nav li.active a i {
+            color: #00ff9d;
+        }
+
+        .logout-btn {
+            color: #ff4444 !important;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn i {
+            color: #ff4444 !important;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 68, 68, 0.1) !important;
+            color: #ff6666 !important;
+        }
+
+        .logout-btn:hover i {
+            color: #ff6666 !important;
+        }
+
+        .futuristic-main {
+            margin-top: 5rem;
+            padding: 2rem;
+        }
+
+        .new-offer-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+        .new-offer-section .futuristic-btn {
+            font-size: 1.1rem;
+            padding: 0.8rem 2rem;
+        }
+    </style>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create cyber lines
+        function createCyberLines() {
+            const container = document.getElementById('cyber-lines');
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'cyber-line';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(line);
+            }
+        }
+
+        createParticles();
+        createCyberLines();
+
+        // Load offers when page loads
+        document.addEventListener('DOMContentLoaded', loadOffers);
+
+        // Load offers data
+        async function loadOffers() {
+            try {
+                const response = await fetch('/offers-data');
+                if (!response.ok) throw new Error('Failed to load offers data');
+                
+                const data = await response.json();
+                updateOffersDisplay(data);
+                updateAnalytics(data.analytics);
+            } catch (error) {
+                console.error('Error loading offers:', error);
+                showToast('Failed to load offers data. Please try again.', 'error');
+            }
+        }
+
+        // Create new offer modal
+        function createNewOffer() {
+            const modal = document.createElement('div');
+            modal.className = 'futuristic-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Create New Offer</h3>
+                        <button onclick="this.closest('.futuristic-modal').remove()" class="close-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <form id="create-offer-form" onsubmit="submitOffer(event)">
+                        <div class="form-group">
+                            <label for="offer-title">Title</label>
+                            <input type="text" id="offer-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="offer-description">Description</label>
+                            <textarea id="offer-description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="offer-discount">Discount (%)</label>
+                            <input type="number" id="offer-discount" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="offer-validity">Valid Until</label>
+                            <input type="date" id="offer-validity" required>
+                        </div>
+                        <button type="submit" class="futuristic-btn">Create Offer</button>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Submit new offer
+        async function submitOffer(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('offer-title').value;
+            const description = document.getElementById('offer-description').value;
+            const discount = document.getElementById('offer-discount').value;
+            const validity = document.getElementById('offer-validity').value;
+
+            try {
+                const response = await fetch('/create-offer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        discount,
+                        validity
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showToast('Offer created successfully!', 'success');
+                    event.target.closest('.futuristic-modal').remove();
+                    loadOffers();
+                } else {
+                    showToast(data.message || 'Failed to create offer', 'error');
+                }
+            } catch (error) {
+                console.error('Error creating offer:', error);
+                showToast('Failed to create offer', 'error');
+            }
+        }
+
+        // Update offers display
+        function updateOffersDisplay(data) {
+            const activeOffersList = document.getElementById('active-offers');
+            const expiredOffersList = document.getElementById('expired-offers');
+            
+            activeOffersList.innerHTML = data.active_offers.map(offer => `
+                <div class="offer-card">
+                    <h3>${offer.title}</h3>
+                    <p>${offer.description}</p>
+                    <div class="offer-details">
+                        <span>Discount: ${offer.discount}%</span>
+                        <span>Valid until: ${offer.validity}</span>
+                        <span>Views: ${offer.views}</span>
+                        <span>Engagements: ${offer.engagements}</span>
+                    </div>
+                    <div class="offer-actions">
+                        <button onclick="editOffer(${offer.id})" class="btn-edit">Edit</button>
+                        <button onclick="deleteOffer(${offer.id})" class="btn-delete">Delete</button>
+                    </div>
+                </div>
+            `).join('') || '<p>No active offers</p>';
+
+            expiredOffersList.innerHTML = data.expired_offers.map(offer => `
+                <div class="offer-card expired">
+                    <h3>${offer.title}</h3>
+                    <p>${offer.description}</p>
+                    <div class="offer-details">
+                        <span>Discount: ${offer.discount}%</span>
+                        <span>Expired: ${offer.validity}</span>
+                        <span>Views: ${offer.views}</span>
+                        <span>Engagements: ${offer.engagements}</span>
+                    </div>
+                    <div class="offer-actions">
+                        <button onclick="deleteOffer(${offer.id})" class="btn-delete">Delete</button>
+                    </div>
+                </div>
+            `).join('') || '<p>No expired offers</p>';
+        }
+
+        // Update analytics display
+        function updateAnalytics(analytics) {
+            document.getElementById('total-views').textContent = analytics.total_views;
+            document.getElementById('total-engagements').textContent = analytics.total_engagements;
+            document.getElementById('conversion-rate').textContent = `${analytics.conversion_rate}%`;
+        }
+
+        // Show toast message
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `futuristic-toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Delete offer
+        async function deleteOffer(offerId) {
+            if (!confirm('Are you sure you want to delete this offer?')) return;
+
+            try {
+                const response = await fetch(`/delete-offer/${offerId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showToast('Offer deleted successfully!', 'success');
+                    loadOffers();
+                } else {
+                    showToast(data.message || 'Failed to delete offer', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting offer:', error);
+                showToast('Failed to delete offer', 'error');
+            }
+        }
+
+        // Edit offer (to be implemented)
+        function editOffer(offerId) {
+            showToast('Edit functionality coming soon!', 'info');
+        }
+    </script>
+</body>
+</html>

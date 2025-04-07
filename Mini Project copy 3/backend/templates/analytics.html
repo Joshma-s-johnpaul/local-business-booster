@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - AI-Powered Local Business Booster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='futuristic.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .analytics-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .analytics-value {
+            font-size: 2em;
+            color: #00ff88;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .analytics-label {
+            color: #fff;
+            font-size: 0.9em;
+        }
+        .insights-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .insight-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .insight-item i {
+            color: #00ff88;
+            font-size: 1.2em;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        .insight-item p {
+            color: #fff;
+            margin: 0;
+            line-height: 1.6;
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .futuristic-topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-header {
+            display: flex;
+            align-items: center;
+        }
+        .nav-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+        .futuristic-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        .futuristic-nav li {
+            position: relative;
+        }
+        .futuristic-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .futuristic-nav a i {
+            color: #00ff9d;
+            font-size: 1.1rem;
+        }
+        .futuristic-nav a:hover {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+        .futuristic-nav li.active a {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+        .futuristic-nav li.active a i {
+            color: #00ff9d;
+        }
+        .logout-btn {
+            color: #ff4444 !important;
+            transition: all 0.3s ease;
+        }
+        .logout-btn i {
+            color: #ff4444 !important;
+        }
+        .logout-btn:hover {
+            background: rgba(255, 68, 68, 0.1) !important;
+            color: #ff6666 !important;
+        }
+        .logout-btn:hover i {
+            color: #ff6666 !important;
+        }
+        .futuristic-main {
+            margin-top: 5rem;
+            padding: 2rem;
+        }
+        .insight-card {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+            backdrop-filter: blur(10px);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .insight-card h3 {
+            color: #00ff9d;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            word-break: break-word;
+        }
+
+        .insight-card p {
+            color: #fff;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            word-break: break-word;
+        }
+
+        .insight-card .metric {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff9d;
+            margin: 0.5rem 0;
+            word-break: break-word;
+        }
+
+        .insight-card .trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+
+        .insight-card .trend i {
+            color: #00ff9d;
+        }
+
+        .insight-card .trend.positive {
+            color: #00C851;
+        }
+
+        .insight-card .trend.negative {
+            color: #ff4444;
+        }
+
+        .futuristic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .futuristic-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Only make AI Insights card wider */
+        .futuristic-card:has(.card-header h3:contains("AI Insights")) {
+            grid-column: 1 / -1;
+        }
+
+        .insights-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .insight-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .insight-item i {
+            color: #00ff88;
+            font-size: 1.2em;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .insight-item p {
+            color: #fff;
+            margin: 0;
+            line-height: 1.6;
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="ai-orb"></div>
+    <div class="ai-particles" id="particles"></div>
+    <div class="cyber-lines" id="cyber-lines"></div>
+
+    <div class="futuristic-layout">
+        <nav class="futuristic-topnav">
+            <div class="nav-header">
+                <h2 class="futuristic-title">AI Business Booster</h2>
+            </div>
+            <ul class="futuristic-nav">
+                <li>
+                    <a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="/offers"><i class="fas fa-gift"></i> Offers</a>
+                </li>
+                <li class="active">
+                    <a href="/analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+                </li>
+                <li>
+                    <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+                <li>
+                    <a href="/about"><i class="fas fa-users"></i> About Us</a>
+                </li>
+                <li>
+                    <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="futuristic-main">
+            <header class="futuristic-header">
+                <h1 class="futuristic-title">Analytics Dashboard</h1>
+                <div class="header-actions">
+                    <div class="date-range">
+                        <select id="timeRange" class="futuristic-select" onchange="updateAnalytics()">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="90">Last 90 Days</option>
+                        </select>
+                    </div>
+                    <button class="futuristic-btn" onclick="exportAnalytics()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                </div>
+            </header>
+
+            <div class="futuristic-grid">
+                <!-- Key Metrics -->
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Performance Overview</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="analytics-grid">
+                            <div class="analytics-item">
+                                <span class="analytics-value" id="total-views">0</span>
+                                <span class="analytics-label">Total Views</span>
+                            </div>
+                            <div class="analytics-item">
+                                <span class="analytics-value" id="total-engagements">0</span>
+                                <span class="analytics-label">Engagements</span>
+                            </div>
+                            <div class="analytics-item">
+                                <span class="analytics-value" id="conversion-rate">0%</span>
+                                <span class="analytics-label">Conversion Rate</span>
+                            </div>
+                            <div class="analytics-item">
+                                <span class="analytics-value" id="avg-engagement">0%</span>
+                                <span class="analytics-label">Avg. Engagement</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Views Over Time -->
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Views Over Time</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="viewsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Performance -->
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Offer Performance</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="offersChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demographics -->
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-users"></i>
+                        <h3>Customer Demographics</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="demographicsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Peak Hours -->
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-clock"></i>
+                        <h3>Peak Hours</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="peakHoursChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Insights -->
+                <div class="futuristic-card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>AI Insights</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="insights-list" id="ai-insights">
+                            <!-- AI insights will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create cyber lines
+        function createCyberLines() {
+            const container = document.getElementById('cyber-lines');
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'cyber-line';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(line);
+            }
+        }
+
+        createParticles();
+        createCyberLines();
+
+        // Chart.js configuration
+        Chart.defaults.color = '#00ff88';
+        Chart.defaults.borderColor = 'rgba(0, 255, 136, 0.2)';
+
+        let viewsChart, offersChart, demographicsChart, peakHoursChart;
+
+        // Initialize charts
+        function initCharts() {
+            // Sample data for demonstration
+            const sampleData = {
+                views_over_time: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    values: [120, 150, 180, 200, 250, 300, 280]
+                },
+                offer_performance: {
+                    labels: ['Summer Sale', 'Weekend Special', 'Holiday Bundle', 'Flash Deal', 'Member Discount'],
+                    views: [450, 380, 320, 280, 250],
+                    engagements: [120, 95, 85, 70, 60]
+                },
+                demographics: {
+                    labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
+                    values: [30, 35, 20, 10, 5]
+                },
+                peak_hours: {
+                    labels: ['9:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'],
+                    values: [45, 65, 85, 120, 150, 180, 140]
+                }
+            };
+
+            // Views Over Time Chart
+            const viewsCtx = document.getElementById('viewsChart').getContext('2d');
+            viewsChart = new Chart(viewsCtx, {
+                type: 'line',
+                data: {
+                    labels: sampleData.views_over_time.labels,
+                    datasets: [{
+                        label: 'Views',
+                        data: sampleData.views_over_time.values,
+                        borderColor: '#00ff88',
+                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                        tension: 0.6,
+                        fill: true,
+                        pointBackgroundColor: '#00ff88',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 255, 136, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Offer Performance Chart
+            const offersCtx = document.getElementById('offersChart').getContext('2d');
+            offersChart = new Chart(offersCtx, {
+                type: 'bar',
+                data: {
+                    labels: sampleData.offer_performance.labels,
+                    datasets: [{
+                        label: 'Views',
+                        data: sampleData.offer_performance.views,
+                        backgroundColor: 'rgba(0, 255, 136, 0.5)',
+                        borderColor: '#00ff88',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }, {
+                        label: 'Engagements',
+                        data: sampleData.offer_performance.engagements,
+                        backgroundColor: 'rgba(0, 255, 136, 0.2)',
+                        borderColor: '#00ff88',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 255, 136, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Demographics Chart
+            const demographicsCtx = document.getElementById('demographicsChart').getContext('2d');
+            demographicsChart = new Chart(demographicsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: sampleData.demographics.labels,
+                    datasets: [{
+                        data: sampleData.demographics.values,
+                        backgroundColor: [
+                            'rgba(0, 255, 136, 0.8)',
+                            'rgba(0, 255, 136, 0.6)',
+                            'rgba(0, 255, 136, 0.4)',
+                            'rgba(0, 255, 136, 0.3)',
+                            'rgba(0, 255, 136, 0.2)'
+                        ],
+                        borderColor: '#00ff88',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+
+            // Peak Hours Chart
+            const peakHoursCtx = document.getElementById('peakHoursChart').getContext('2d');
+            peakHoursChart = new Chart(peakHoursCtx, {
+                type: 'line',
+                data: {
+                    labels: sampleData.peak_hours.labels,
+                    datasets: [{
+                        label: 'Activity',
+                        data: sampleData.peak_hours.values,
+                        borderColor: '#00ff88',
+                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                        tension: 0.6,
+                        fill: true,
+                        pointBackgroundColor: '#00ff88',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 255, 136, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Set initial metrics
+            document.getElementById('total-views').textContent = '1,480';
+            document.getElementById('total-engagements').textContent = '430';
+            document.getElementById('conversion-rate').textContent = '29%';
+            document.getElementById('avg-engagement').textContent = '86';
+
+            // Set initial AI insights
+            const insightsContainer = document.getElementById('ai-insights');
+            insightsContainer.innerHTML = `
+                <div class="insight-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>Peak engagement occurs between 17:00-19:00, suggesting optimal posting times for new offers.</p>
+                </div>
+                <div class="insight-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>25-34 age group shows highest engagement rate at 35%, indicating your target demographic.</p>
+                </div>
+                <div class="insight-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>Weekend Special offer performed best with 95 engagements, suggesting weekend promotions are more effective.</p>
+                </div>
+            `;
+        }
+
+        // Update charts with data
+        function updateCharts(data) {
+            // Update metrics
+            document.getElementById('total-views').textContent = data.total_views.toLocaleString();
+            document.getElementById('total-engagements').textContent = data.total_engagements.toLocaleString();
+            document.getElementById('conversion-rate').textContent = data.conversion_rate + '%';
+            document.getElementById('avg-engagement').textContent = data.avg_engagement + '%';
+
+            // Update Views Chart
+            viewsChart.data.labels = data.views_over_time.labels;
+            viewsChart.data.datasets[0].data = data.views_over_time.values;
+            viewsChart.update();
+
+            // Update Offers Chart
+            offersChart.data.labels = data.offer_performance.labels;
+            offersChart.data.datasets[0].data = data.offer_performance.views;
+            offersChart.data.datasets[1].data = data.offer_performance.engagements;
+            offersChart.update();
+
+            // Update Demographics Chart
+            demographicsChart.data.labels = data.demographics.labels;
+            demographicsChart.data.datasets[0].data = data.demographics.values;
+            demographicsChart.update();
+
+            // Update Peak Hours Chart
+            peakHoursChart.data.labels = data.peak_hours.labels;
+            peakHoursChart.data.datasets[0].data = data.peak_hours.values;
+            peakHoursChart.update();
+
+            // Update AI Insights
+            const insightsContainer = document.getElementById('ai-insights');
+            insightsContainer.innerHTML = data.ai_insights.map(insight => `
+                <div class="insight-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>${insight}</p>
+                </div>
+            `).join('');
+        }
+
+        // Fetch analytics data
+        async function fetchAnalytics() {
+            const timeRange = document.getElementById('timeRange').value;
+            try {
+                const response = await fetch(`/analytics-data?days=${timeRange}`);
+                if (!response.ok) throw new Error('Failed to fetch analytics data');
+                const data = await response.json();
+                updateCharts(data);
+            } catch (error) {
+                console.error('Error fetching analytics:', error);
+                showToast('Failed to load analytics data. Please try again.', 'error');
+            }
+        }
+
+        // Export analytics
+        async function exportAnalytics() {
+            const timeRange = document.getElementById('timeRange').value;
+            window.location.href = `/export-analytics?days=${timeRange}`;
+        }
+
+        // Show toast message
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `futuristic-toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            fetchAnalytics();
+            document.getElementById('timeRange').addEventListener('change', fetchAnalytics);
+        });
+    </script>
+</body>
+</html>
